@@ -1,0 +1,20 @@
+name: Notify Slack When Issue Closed
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Slack notification
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \"GitHub 任务已完成：${{ github.event.issue.title }}\n链接：${{ github.event.issue.html_url }}\"
+          }" \
+          "$SLACK_WEBHOOK_URL"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
