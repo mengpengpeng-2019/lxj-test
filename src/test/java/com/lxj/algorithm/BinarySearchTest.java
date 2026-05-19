@@ -13,6 +13,9 @@ public final class BinarySearchTest {
         returnsMinusOneWhenTargetIsAbsent();
         handlesEmptyArray();
         rejectsNullArray();
+        findsMaxInRotatedSortedArray();
+        findsMaxInUnrotatedSortedArray();
+        rejectsEmptyArrayWhenFindingMax();
 
         System.out.println("All BinarySearch tests passed.");
     }
@@ -50,6 +53,29 @@ public final class BinarySearchTest {
         }
 
         throw new AssertionError("Expected IllegalArgumentException for null array");
+    }
+
+    private static void findsMaxInRotatedSortedArray() {
+        int[] values = {13, 21, 34, 2, 5, 8};
+
+        assertEquals(34, BinarySearch.maxOfRotatedSortedArray(values), "max in rotated array");
+    }
+
+    private static void findsMaxInUnrotatedSortedArray() {
+        int[] values = {1, 3, 5, 7, 9};
+
+        assertEquals(9, BinarySearch.maxOfRotatedSortedArray(values), "max in unrotated array");
+        assertEquals(6, BinarySearch.maxOfRotatedSortedArray(new int[] {6}), "single value array");
+    }
+
+    private static void rejectsEmptyArrayWhenFindingMax() {
+        try {
+            BinarySearch.maxOfRotatedSortedArray(new int[0]);
+        } catch (IllegalArgumentException expected) {
+            return;
+        }
+
+        throw new AssertionError("Expected IllegalArgumentException for empty array");
     }
 
     private static void assertEquals(int expected, int actual, String scenario) {

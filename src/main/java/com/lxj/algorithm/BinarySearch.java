@@ -40,4 +40,31 @@ public final class BinarySearch {
 
         return -1;
     }
+
+    /**
+     * Returns the maximum value in an ascending array that may have been rotated.
+     *
+     * @param values values sorted in ascending order, optionally rotated
+     * @return maximum value in the array
+     */
+    public static int maxOfRotatedSortedArray(int[] values) {
+        if (values == null || values.length == 0) {
+            throw new IllegalArgumentException("values must not be null or empty");
+        }
+
+        int low = 0;
+        int high = values.length - 1;
+
+        while (low < high) {
+            int middle = low + (high - low + 1) / 2;
+
+            if (values[middle] >= values[0]) {
+                low = middle;
+            } else {
+                high = middle - 1;
+            }
+        }
+
+        return values[low];
+    }
 }
